@@ -22,7 +22,9 @@ function App() {
 
     return (
         <div className="App">
+            <div className={"main"}>
             <DataGrid
+                className={"tabela"}
                 dataSource={serviceUrl}
 
             >
@@ -33,6 +35,7 @@ function App() {
                 })}
                 <ColumnChooser title={'Sakrivene kategorije'} enabled={true}/>
             </DataGrid>
+                </div>
             <aside>
             </aside>
         </div>
