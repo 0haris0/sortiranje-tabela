@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+
+import 'devextreme/dist/css/dx.light.css';
 import './App.css';
+import {DataGrid} from "devextreme-react";
+import {Column, ColumnChooser, SearchPanel} from "devextreme-react/data-grid";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [column, setColumn] = useState([]);
+    const serviceUrl = 'http://77.78.198.63:252/sifre';
+    const kolone = [
+        "id",
+        "klasifikacija",
+        "naziv",
+        "karakteristikaA",
+        "karakteristikaB",
+        "karakteristikaC",
+        "karakteristikaD",
+        "karakteristikaE"
+    ];
+
+
+    return (
+        <div className="App">
+            <DataGrid
+                dataSource={serviceUrl}
+
+            >
+
+                <SearchPanel visible={true} placeholder={'Pretraga'}/>
+                {kolone.map((value, key) => {
+                    return <Column key= {key} dataField={value} />
+                })}
+                <ColumnChooser title={'Sakrivene kategorije'} enabled={true}/>
+            </DataGrid>
+            <aside>
+            </aside>
+        </div>
+    );
+}
+
+async function fetchColumn() {
+    let columns = null;
+    let response = null;
+    columns = await fetch('http://77.78.198.63:252/kolone');
+    response = await columns.json();
+    return response;
 }
 
 export default App;
